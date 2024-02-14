@@ -1,7 +1,5 @@
-use std::vec;
-
-
-
+use std;
+use num_integer;
 
 /**
  * BinaryGap
@@ -53,6 +51,40 @@ fn cyclic_rotation_solution(vector: Vec<i32>, rotations: i32) -> Vec<i32> {
     cyclic_rot
 }
 
+
+fn odd_occurence_in_array_solution(array: Vec<u32>) -> u32 {
+    let mut array_of_occurences:Vec<u32> = Vec::new();
+    let mut max_value = *array.iter().max().unwrap();
+    for i in 1..max_value+2{
+        array_of_occurences.push(0);
+    }
+
+    for element in array {
+        array_of_occurences[element as usize] += 1;
+    }
+
+    for i in 1..max_value+2 {
+        if array_of_occurences[i as usize] == 1{
+            println!("{:?}", i);
+            return i
+        }    
+    }
+    0
+}
+
+/**
+ * Frog_jmp
+ */
+fn frog_jmp_solution(X: i32, Y: i32, D: i32) -> i32 {
+    let (quotient, rest) =  num_integer::div_rem(X-Y, D);
+    if rest > 0{
+        quotient+1
+    }
+    else {
+        quotient
+    }
+}
+
 fn main() {
     /*
      * binary gap test
@@ -69,4 +101,18 @@ fn main() {
     // let test_rotation = 3;
     // let cyclic_rot = cyclic_rotation_solution(test_vector, test_rotation);
     // println!("{:?}", cyclic_rot);
+
+    /*
+        Odd Occurence in array
+     */
+    // let test_vector_odd = vec![9, 3, 9, 3, 9, 7, 9];
+    // println!("{:?}", odd_occurence_in_array_solution(test_vector_odd));
+
+    /*
+        Frog jump
+
+     */
+    println!("{:?}", frog_jmp_solution(120, 10, 30));
 }
+
+
