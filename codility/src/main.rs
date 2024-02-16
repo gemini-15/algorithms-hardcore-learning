@@ -210,6 +210,59 @@ fn missing_integer(vector: &Vec<i32>)  -> i32 {
     missing_number
 }
 
+/**
+ * countdiv
+ */
+fn count_div_solution(A: u32, B: u32, K:u32) -> u32 {
+    let range: Vec<u32> = (A..B).collect();
+    let mut dividables = 0u32;  
+    for element in range {
+        if element%K == 0 {
+            dividables +=1;
+        }
+    }
+    dividables
+}
+
+/**
+ * Distinct 
+ */
+fn Distinct_solution(vector: &Vec<i16>) -> i16 {
+    use std::collections::HashSet;
+    let mut distinct = HashSet::new();
+    for element in vector {
+        distinct.insert(*element);
+    }
+    distinct.len().try_into().unwrap()
+}   
+
+
+/**
+ * MaxProductOfThree
+ * 
+ */
+fn max_product_of_three_solution(vector: &Vec<i16>) -> i16 {
+    use std::collections::HashSet;
+
+    // getting the hashset directly
+    let mut vector_set: HashSet<i16> = HashSet::from_iter(vector[..].iter().cloned());
+
+    // sorting the biggest 3 elements
+    let mut max_three = 1;
+
+    for _ in 0..3 {
+        if let Some(max_value) = vector_set.iter().cloned().max() {
+            max_three = max_three*max_value;
+            vector_set.remove(&max_value);
+        }
+    }
+    
+    max_three
+
+}
+
+
+
 fn main() {
     /*
      * binary gap test
@@ -277,8 +330,28 @@ fn main() {
     /*
         Smallest missing 
      */
-    let A = vec![-1, -3];
-    println!("{:?}", missing_integer(&A));
+    // let A = vec![-1, -3];
+    // println!("{:?}", missing_integer(&A));
+
+    /*
+        Count div
+     */
+    // let a = 6;
+    // let b = 11;
+    // let k = 2; 
+    // println!("{:?}", count_div_solution(a, b, k));
+    
+    /*
+        Distinct
+     */
+    // let A = vec![2, 1, 1, 2, 3, 1];
+    // println!("{:?}", Distinct_solution(&A));
+
+    /*
+        Maxproductofthree
+     */
+    let A = vec![-3, 1, 2, -2, 5, 6];
+    println!("{:?}", max_product_of_three_solution(&A));
 
 }
 
