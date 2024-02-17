@@ -210,6 +210,26 @@ fn missing_integer(vector: &Vec<i32>)  -> i32 {
     missing_number
 }
 
+// pub fn solution(A: &mut Vec<i32>) -> i32 {
+//     use std::collections::HashSet;
+
+//     let mut smallest_pos:i32 = 1;
+//     let slice = A.as_slice();
+//     let mut set_vec : HashSet<i32> = HashSet::new();
+//     for element in slice {
+//         let diff = 0;
+//         if element > &mut 0 {
+//             set_vec.insert(*element);
+//         }
+//     }
+
+//     while set_vec.contains(&smallest_pos) {
+//         smallest_pos +=1;
+//     }
+
+//     smallest_pos
+
+// }
 /**
  * countdiv
  */
@@ -261,7 +281,130 @@ fn max_product_of_three_solution(vector: &Vec<i16>) -> i16 {
 
 }
 
+fn number_of_disc_intersections(vector: &Vec<i32>) -> i32 {
+    let number_intersections = 0;
+    
+    let array_start: Vec<i32> = Vec::new();
+    let array_end:Vec<i32> = Vec::new();
 
+    let mut intervals : Vec<(i32, i32)> = Vec::new();
+    // let t: i32 = (vector.len()-1).try_into().unwrap(); 
+
+
+    // for i in 0..vector.len().try_into().unwrap() {
+    //     let start: i32 = 
+    // }
+    for (i, &radius) in vector.iter().enumerate() {
+        intervals.push(
+            ((i as i32-radius), i as i32+radius)
+        );
+    }
+
+    // sorting the intervals vector by the first entry of each tuple 
+
+
+    0
+}
+
+/**
+ * Brackets solution 
+ */
+fn brackets_solution(S: &str) -> u8 {
+    let mut brackets_stack = String::new();
+
+    for c in S.chars() {
+        match c {
+            '{' | '(' | '[' => brackets_stack.push(c),
+            '}' => {
+                let popped_value = brackets_stack.pop().unwrap(); 
+                if popped_value != '{' {
+                    return 0
+                }
+            },             
+            ')' => {
+                let popped_value = brackets_stack.pop().unwrap(); 
+                if popped_value != '(' {
+                    return 0
+                }
+            }, 
+            ']' => {
+                let popped_value = brackets_stack.pop().unwrap(); 
+                if popped_value != '[' {
+                    return 0
+                }
+            }, 
+            _ => println!("{:?}", c)
+        }
+    }
+
+    1
+}
+
+
+/**
+ * Fish
+ */
+fn fish_solution(arrayA: &Vec<u32>, arrayB: &Vec<u32>) -> usize {
+    let mut number_of_fish = arrayA.len();
+
+    let mut fish_stack: Vec<(u32, u32)> = Vec::new();
+    fish_stack.push((arrayA[0], arrayB[0]));
+    println!("{:?}", fish_stack);
+    for fish in 1..arrayA.len() {
+        // fish_stack.push((A[fish], B[fish]))
+        println!("{:?}", fish_stack);
+
+        let (prec_fishA, prec_fishB) = fish_stack.pop().unwrap(); 
+        println!("prec fish is : {:?}, current is :{:?}", prec_fishB, arrayB[fish]);
+        // Opposit direction to be eaten
+        if prec_fishB > arrayB[fish] {
+            number_of_fish -=1;
+            println!("number of fish is {:?}", number_of_fish); 
+            if prec_fishA > arrayA[fish] {
+                fish_stack.push((prec_fishA, prec_fishB));
+            }
+            else {
+                fish_stack.push((arrayA[fish], arrayB[fish]));
+            }
+        }
+        else {
+            fish_stack.push((arrayA[fish], arrayB[fish]));
+        }
+
+
+    }
+
+    number_of_fish
+}
+
+
+/**
+ * Nesting
+ * 
+ */
+fn nesting_solution(S: &str) -> u8 {
+    let mut stack_nested = String::new();
+
+    for c in S.chars() {
+        match c {
+            '(' => stack_nested.push(c),
+            ')' => {
+                let last_element = stack_nested.pop();
+                if last_element.unwrap() != '(' || last_element == None {
+                    return 0
+                }
+            },
+            _ => println!("{:?}", stack_nested)
+        }
+    }
+
+    if stack_nested.len() == 0 {
+        0
+    }
+    else {
+        1
+    }
+}
 
 fn main() {
     /*
@@ -350,9 +493,24 @@ fn main() {
     /*
         Maxproductofthree
      */
-    let A = vec![-3, 1, 2, -2, 5, 6];
-    println!("{:?}", max_product_of_three_solution(&A));
+    // let A = vec![-3, 1, 2, -2, 5, 6];
+    // println!("{:?}", max_product_of_three_solution(&A));
 
+    /*
+        Brackets
+     */
+    // let S =  "{[()()]}"; 
+    // // let mut ss = String::from(S);
+    // println!("{:?}", brackets_solution(S));
+
+
+    /*
+        Fish
+     */
+    let A = vec![4, 3, 2, 1, 5];
+    let B = vec![0, 1, 0, 0, 0];
+
+    println!("{:?}", fish_solution(A.as_ref(), B.as_ref()));
 }
 
 
