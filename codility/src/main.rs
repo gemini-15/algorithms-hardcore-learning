@@ -390,7 +390,7 @@ fn nesting_solution(S: &str) -> u8 {
             '(' => stack_nested.push(c),
             ')' => {
                 let last_element = stack_nested.pop();
-                if last_element.unwrap() != '(' || last_element == None {
+                if last_element == None || last_element.unwrap() != '('  {
                     return 0
                 }
             },
@@ -399,11 +399,35 @@ fn nesting_solution(S: &str) -> u8 {
     }
 
     if stack_nested.len() == 0 {
-        0
-    }
-    else {
         1
     }
+    else {
+        0
+    }
+}
+
+/**
+ * Count factors
+ * 
+ */
+fn count_factors_solution(N: u32) -> u32 {
+    let square_N = (N as f32).sqrt();
+    let square_N_int = square_N as u32;
+    println!("{:?}", square_N_int);
+    let mut number_of_factors = 0;
+    let mut  num = 1;
+    while num < square_N_int+1 {
+        if N%num == 0 {
+            if N/num != num {
+                number_of_factors+=2;
+            }
+            else {
+                number_of_factors+=1;
+            }
+        }
+        num +=1;
+    } 
+    number_of_factors
 }
 
 fn main() {
@@ -507,10 +531,22 @@ fn main() {
     /*
         Fish
      */
-    let A = vec![4, 3, 2, 1, 5];
-    let B = vec![0, 1, 0, 0, 0];
+    // let A = vec![4, 3, 2, 1, 5];
+    // let B = vec![0, 1, 0, 0, 0];
 
-    println!("{:?}", fish_solution(A.as_ref(), B.as_ref()));
+    // println!("{:?}", fish_solution(A.as_ref(), B.as_ref()));
+
+    /*
+        Nesting 
+     */
+    // let S = "())";
+    // println!("{:?}", nesting_solution(S));
+
+    /*
+        count factors
+     */
+    println!("{:?}", count_factors_solution(24));
+
 }
 
 
